@@ -14,47 +14,47 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest      # 자신의 서버센팅도 가능
+    runs-on: ubuntu-latest     
   
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
+   - uses: actions/checkout@v4
+   - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
         
-    - name: Install dependencies
-      run: |
+   - name: Install dependencies
+     run: |
         python -m pip install --upgrade pip
 
         
-  # 필요한 라이브러리들을 설치하기!
-   - name : library install
+ 
+   - name: library install
      run: |    
        pip install requests
        pip install beautifulsoup4
        pip install pandas
        pip install lxml
        
-  # 내가 만든 파이썬 파일을 실행    
-    - name: run my file
-      run: |
+    
+   - name: run my file
+     run: |
          python3 news.py
 
 
     # 커밋
-    - name : commits
-      run: |  
+   - name : commits
+     run: |  
         git config --global user.email "98564417a@gmail.com"   
-        git config --user.name "jueel"
+        git config --user.name "jueelkim"
         git add data.csv
         git commit -m "뉴스데이타 수집"
 
 
     #푸쉬
-    - name : push
-      uses : ad-m/github-push-action@master
-      with : 
+   - name : push
+     uses : ad-m/github-push-action@master
+     with : 
         branch : "main"
         github token :  $
         
