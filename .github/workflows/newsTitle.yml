@@ -31,15 +31,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests beautifulsoup4 pandas lxml
 
-        
  
-   #- name: library install
-      run: |    
-       pip install requests
-       pip install beautifulsoup4
-       pip install pandas
-       
-       
     
    - name: Run my file
      run: |
