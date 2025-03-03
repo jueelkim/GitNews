@@ -5,7 +5,6 @@ name: Python package
 
 
 on:
-# 어떤 조건일때 파일을 실행 시킬지
   push:
     branches: [ "main" ]
   pull_request:
@@ -13,11 +12,15 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest     
+
+    strategy:
+      matrix:
+        python-version:['3.8','3.9','3.10']
   
     steps:
    - uses: actions/checkout@v4
+   
    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -26,27 +29,28 @@ jobs:
    - name: Install dependencies
      run: |
         python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 pandas lxml
 
         
  
-   - name: library install
-     run: |    
+   #- name: library install
+      run: |    
        pip install requests
        pip install beautifulsoup4
        pip install pandas
-       pip install lxml
+       
        
     
-   - name: run my file
+   - name: Run my file
      run: |
-         python3 news.py
+         python news.py
 
 
     # 커밋
    - name : commits
      run: |  
         git config --global user.email "98564417a@gmail.com"   
-        git config --user.name "jueelkim"
+        git config --global user.name "jueelkim"
         git add data.csv
         git commit -m "뉴스데이타 수집"
 
@@ -55,9 +59,8 @@ jobs:
    - name : push
      uses : ad-m/github-push-action@master
      with : 
+        github token :  ${{ secrets.GITHUB_TOKEN}}
         branch : "main"
-        github token :  $
-        
 
 
 
